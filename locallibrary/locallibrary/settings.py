@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+
+env = environ.Env()
+environ.Env.read_env() # reading .env file
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Add our new application
     'catalog.apps.CatalogConfig', #This object was created for us in /catalog/apps.py
+    'django.contrib.sites',
+    'django.contrib.flatpages',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -79,9 +87,9 @@ WSGI_APPLICATION = 'locallibrary.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME'    : 'django_project',                 # <-- UPDATED line
-        'USER'    : 'root',                     # <-- UPDATED line
-        'PASSWORD': 'Aa@123456',              # <-- UPDATED line
+        'NAME'    : env('DATABASE_NAME'),                 # <-- UPDATED line
+        'USER'    : env('DATABASE_USER'),                     # <-- UPDATED line
+        'PASSWORD': env('DATABASE_PASS'),              # <-- UPDATED line
         'HOST'    : 'localhost',                # <-- UPDATED line
         'PORT'    : '3306',
     }
