@@ -8,10 +8,14 @@
             {% for author in author_list %}
                 <li>
                     <a href="{{ author.get_absolute_url }}">{{ author.first_name }}</a> ({{ author.date_of_birth }})
+                    - <a href="{% url 'author-update' author.id %}">Update</a>
+                    - <a href="{% url 'author-delete' author.id %}">Delete</a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>{% translate "There are no author in the library." %}</p>
     {% endif %}
+
+    <a href="{%url 'author-create'%}">{% translate "Create Author" %}</a>
 {% endblock %}
